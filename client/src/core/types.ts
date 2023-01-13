@@ -18,3 +18,14 @@ export interface Bet {
   amount: number;
   win: boolean;
 }
+
+export interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+}
+
+export interface ApiResponse<T> {
+  route: string;
+  data: T;
+}

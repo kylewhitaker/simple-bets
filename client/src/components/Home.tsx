@@ -1,6 +1,6 @@
 import { Auth } from "aws-amplify";
-import { useState } from "react";
-import { Bet, getFormData, View } from "../core";
+import { useEffect, useState } from "react";
+import { Bet, fetchBets, getFormData, View } from "../core";
 
 interface Props {
   user: string | null;
@@ -10,6 +10,10 @@ interface Props {
 
 export function Home(props: Props) {
   const [bets, setBets] = useState<Bet[]>([]);
+
+  useEffect(() => {
+    fetchBets().then((bets) => setBets(bets || []));
+  }, []);
 
   async function logout() {
     await Auth.signOut();

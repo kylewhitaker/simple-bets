@@ -6,7 +6,8 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "client"
+    "client",
+    "server"
   ],
   "dependencies": {},
   "devDependencies": {}
