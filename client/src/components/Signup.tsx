@@ -1,20 +1,32 @@
+import { Auth } from "aws-amplify";
 import { View } from "../core";
 
 interface Props {
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
   setView: React.Dispatch<React.SetStateAction<View>>;
 }
 
 export function Signup(props: Props) {
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        console.log("signup form submitted");
-        const data = Object.fromEntries(
-          new FormData(e.target as HTMLFormElement)
-        );
-        console.log(data);
-        props.setView(View.Login);
+      onSubmit={async (e) => {
+        try {
+          e.preventDefault();
+          const data = Object.fromEntries(
+            new FormData(e.target as HTMLFormElement)
+          );
+          const { user } = await Auth.signUp({
+            username: data.email as string,
+            password: data.password as string,
+            attributes: {
+              email: data.email,
+            },
+          });
+          console.log(user);
+          props.setView(View.Login); // todo: fix to Verify
+        } catch (error) {
+          alert(error);
+        }
       }}
     >
       <div>
