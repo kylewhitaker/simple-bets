@@ -1,4 +1,3 @@
-import { Auth } from "aws-amplify";
 import { getFormData, View } from "../core";
 
 interface Props {
@@ -14,9 +13,9 @@ export function Verify(props: Props) {
           e.preventDefault();
           const data = getFormData(e.target);
           console.log(data);
-          const confirmation = await Auth.confirmSignUp(data.email, data.code);
-          console.log(confirmation);
-          props.setView(View.Login);
+
+          // TODO: confirm sign up with AWS Cognito, go to Login
+          //
         } catch (error) {
           alert(error);
         }

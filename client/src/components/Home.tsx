@@ -1,6 +1,5 @@
-import { Auth } from "aws-amplify";
 import { useEffect, useState } from "react";
-import { Bet, createBet, getBets, getFormData, User, View } from "../core";
+import { Bet, getBets, getFormData, User, View } from "../core";
 
 interface Props {
   user: User | null;
@@ -16,24 +15,28 @@ export function Home(props: Props) {
   }, []);
 
   async function logout() {
-    await Auth.signOut();
-    props.setUser(null);
+    // TODO: sign out
+
     props.setView(View.Landing);
   }
 
   return (
     <>
-      <p>Welcome back, {props.user?.firstName}</p>
+      <p>Welcome back!</p>
       <form
         style={{ marginBottom: "20px" }}
         onSubmit={async (e) => {
           e.preventDefault();
           const data = getFormData(e.target);
           console.log(data);
-          const newBet = await createBet({
-            amount: data.amount,
+
+          // TODO: create the bet in our database, linked to user
+
+          const newBet = {
+            amount: Number(data.amount),
             win: Math.random() > 0.5,
-          });
+          };
+
           setBets((bets) => [newBet, ...bets]);
         }}
       >

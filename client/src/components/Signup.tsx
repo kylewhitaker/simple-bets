@@ -1,5 +1,4 @@
-import { Auth } from "aws-amplify";
-import { createUser, getFormData, View } from "../core";
+import { getFormData, View } from "../core";
 
 interface Props {
   setEmail: React.Dispatch<React.SetStateAction<string>>;
@@ -14,19 +13,9 @@ export function Signup(props: Props) {
           e.preventDefault();
           const data = getFormData(e.target);
 
-          const { user } = await Auth.signUp({
-            username: data.email,
-            password: data.password,
-            attributes: {
-              email: data.email,
-              given_name: data.fname,
-              family_name: data.lname,
-            },
-          });
-          console.log(user);
+          // TODO: sign up on AWS Cognito
 
-          props.setEmail(data.email);
-          props.setView(View.Verify);
+          props.setView(View.Login);
         } catch (error) {
           alert(error);
         }

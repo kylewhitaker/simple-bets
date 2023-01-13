@@ -1,5 +1,4 @@
-import { Auth } from "aws-amplify";
-import { createUser, getFormData, getUser, User, View } from "../core";
+import { getFormData, User, View } from "../core";
 
 interface Props {
   setView: React.Dispatch<React.SetStateAction<View>>;
@@ -15,24 +14,10 @@ export function Login(props: Props) {
           const data = getFormData(e.target);
           console.log(data);
 
-          // AWS Cognito
-          const user = await Auth.signIn(data.email, data.password);
-          console.log(user);
-          console.log(user.attributes);
-          console.log(user.attributes.given_name);
+          // TODO: sign in with AWS Cognito
 
-          // Database: get or create
-          let dbUser = await getUser();
-          if (!dbUser) {
-            dbUser = await createUser({
-              firstName: user.attributes.given_name,
-              lastName: user.attributes.family_name,
-              email: user.attributes.email,
-            });
-          }
-          console.log(dbUser);
+          // TODO: fetch (or create) user from our database
 
-          props.setUser(dbUser);
           props.setView(View.Home);
         } catch (error) {
           alert(error);

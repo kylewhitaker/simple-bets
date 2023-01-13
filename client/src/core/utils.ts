@@ -1,4 +1,3 @@
-import { Auth } from "aws-amplify";
 import axios from "axios";
 import { ApiResponse, Bet, User } from "./types";
 
@@ -10,7 +9,7 @@ export function getFormData(form: EventTarget | HTMLFormElement): {
   };
 }
 
-const customFetch =
+const request =
   <T>(method: "GET" | "POST" | "PUT", slug: string) =>
   async (body: any = undefined): Promise<T> => {
     return axios
@@ -18,11 +17,6 @@ const customFetch =
         url: `http://localhost:4200${slug}`,
         method,
         data: body,
-        headers: {
-          Authorization: `Bearer ${(await Auth.currentSession())
-            .getAccessToken()
-            .getJwtToken()}`,
-        },
       })
       .then((response) => response.data as Promise<ApiResponse<T>>)
       .then((response) => response.data)
@@ -32,8 +26,8 @@ const customFetch =
       });
   };
 
-export const getUser = customFetch<User>("GET", "/user");
-export const createUser = customFetch<User>("POST", "/user");
-export const updateUser = customFetch<User>("PUT", "/user");
-export const getBets = customFetch<Bet[]>("GET", "/bets");
-export const createBet = customFetch<Bet>("POST", "/bets");
+export const getUser = request<User>("GET", "/user");
+export const createUser = request<User>("POST", "/user");
+export const updateUser = request<User>("PUT", "/user");
+export const getBets = request<Bet[]>("GET", "/bets");
+export const createBet = request<Bet>("POST", "/bets");
