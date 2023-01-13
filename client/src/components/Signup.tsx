@@ -23,7 +23,8 @@ export function Signup(props: Props) {
           });
 
           console.log(user);
-          props.setView(View.Login); // todo: fix to Verify
+          props.setEmail(data.email);
+          props.setView(View.Verify);
         } catch (error) {
           alert(error);
         }

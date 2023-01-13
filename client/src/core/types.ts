@@ -1,6 +1,7 @@
 export enum View {
   Landing = "landing",
   Signup = "signup",
+  Verify = "verify",
   Login = "login",
   Home = "home",
 }
