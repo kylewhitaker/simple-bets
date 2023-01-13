@@ -6,9 +6,13 @@ export enum View {
   Home = "home",
 }
 
-export interface User {
-  firstName: string;
-}
+export const IS_PRIVATE: Record<View, boolean> = {
+  [View.Landing]: false,
+  [View.Signup]: false,
+  [View.Verify]: false,
+  [View.Login]: false,
+  [View.Home]: true,
+};
 
 export interface Bet {
   amount: number;

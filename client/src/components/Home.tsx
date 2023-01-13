@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Bet, getFormData, User, View } from "../core";
+import { Bet, getFormData, View } from "../core";
 
 interface Props {
-  user: User;
+  user: string | null;
   setView: React.Dispatch<React.SetStateAction<View>>;
 }
 
@@ -15,7 +15,7 @@ export function Home(props: Props) {
 
   return (
     <>
-      <p>Welcome back, {props.user.firstName}</p>
+      <p>Welcome back, {props.user}</p>
       <form
         style={{ marginBottom: "20px" }}
         onSubmit={(e) => {

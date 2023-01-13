@@ -3,6 +3,7 @@ import { getFormData, View } from "../core";
 
 interface Props {
   setView: React.Dispatch<React.SetStateAction<View>>;
+  setUser: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export function Login(props: Props) {
@@ -15,6 +16,7 @@ export function Login(props: Props) {
           console.log(data);
           const user = await Auth.signIn(data.email, data.password);
           console.log(user);
+          props.setUser(user.username);
           props.setView(View.Home);
         } catch (error) {
           alert(error);
