@@ -1,21 +1,20 @@
 import { useEffect, useState } from "react";
 import logo from "./assets/logo.png";
 import "./App.css";
-import { IS_PRIVATE, View } from "./core";
+import { getUser, IS_PRIVATE, User, View } from "./core";
 import { Home, Landing, Login, Signup, Verify } from "./components";
 import { Auth } from "aws-amplify";
 
 function App() {
   const [view, setView] = useState<View>(View.Landing);
   const [email, setEmail] = useState<string>("");
-  const [user, setUser] = useState<string | null>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   // check for authenticated user on app load
   useEffect(() => {
     Auth.currentAuthenticatedUser()
-      .then((user) => {
-        console.log("user is logged in");
-        setUser(user.username);
+      .then(() => {
+        getUser().then((dbUser) => setUser(dbUser));
       })
       .catch(() => {
         console.log("nobody is logged in");

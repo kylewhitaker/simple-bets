@@ -14,7 +14,8 @@ export function Verify(props: Props) {
           e.preventDefault();
           const data = getFormData(e.target);
           console.log(data);
-          await Auth.confirmSignUp(data.email, data.code);
+          const confirmation = await Auth.confirmSignUp(data.email, data.code);
+          console.log(confirmation);
           props.setView(View.Login);
         } catch (error) {
           alert(error);

@@ -9,11 +9,11 @@ generator client {
 }
 
 model User {
-  id        Int    @id @default(autoincrement())
-  cognitoId String
+  id        Int     @id @default(autoincrement())
+  cognitoId String? @unique
   firstName String
   lastName  String
-  email     String
+  email     String  @unique
   bets      Bet[]
 }
 

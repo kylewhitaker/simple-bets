@@ -1,10 +1,10 @@
 import { Auth } from "aws-amplify";
 import { useEffect, useState } from "react";
-import { Bet, fetchBets, getFormData, View } from "../core";
+import { Bet, createBet, getBets, getFormData, User, View } from "../core";
 
 interface Props {
-  user: string | null;
-  setUser: React.Dispatch<React.SetStateAction<string | null>>;
+  user: User | null;
+  setUser: React.Dispatch<React.SetStateAction<User | null>>;
   setView: React.Dispatch<React.SetStateAction<View>>;
 }
 
@@ -12,7 +12,7 @@ export function Home(props: Props) {
   const [bets, setBets] = useState<Bet[]>([]);
 
   useEffect(() => {
-    fetchBets().then((bets) => setBets(bets || []));
+    getBets().then((bets) => setBets(bets || []));
   }, []);
 
   async function logout() {
@@ -23,17 +23,18 @@ export function Home(props: Props) {
 
   return (
     <>
-      <p>Welcome back, {props.user}</p>
+      <p>Welcome back, {props.user?.firstName}</p>
       <form
         style={{ marginBottom: "20px" }}
-        onSubmit={(e) => {
+        onSubmit={async (e) => {
           e.preventDefault();
           const data = getFormData(e.target);
           console.log(data);
-          setBets((bets) => [
-            { amount: Number(data.amount), win: Math.random() > 0.5 },
-            ...bets,
-          ]);
+          const newBet = await createBet({
+            amount: data.amount,
+            win: Math.random() > 0.5,
+          });
+          setBets((bets) => [newBet, ...bets]);
         }}
       >
         <div>
