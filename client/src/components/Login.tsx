@@ -1,3 +1,4 @@
+import { Auth } from "aws-amplify";
 import { getFormData, View } from "../core";
 
 interface Props {
@@ -7,11 +8,17 @@ interface Props {
 export function Login(props: Props) {
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        const data = getFormData(e.target);
-        console.log(data);
-        props.setView(View.Home);
+      onSubmit={async (e) => {
+        try {
+          e.preventDefault();
+          const data = getFormData(e.target);
+          console.log(data);
+          const user = await Auth.signIn(data.email, data.password);
+          console.log(user);
+          props.setView(View.Home);
+        } catch (error) {
+          alert(error);
+        }
       }}
     >
       <div>
