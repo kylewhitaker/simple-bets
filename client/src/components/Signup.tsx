@@ -1,5 +1,5 @@
 import { Auth } from "aws-amplify";
-import { View } from "../core";
+import { getFormData, View } from "../core";
 
 interface Props {
   setEmail: React.Dispatch<React.SetStateAction<string>>;
@@ -12,16 +12,16 @@ export function Signup(props: Props) {
       onSubmit={async (e) => {
         try {
           e.preventDefault();
-          const data = Object.fromEntries(
-            new FormData(e.target as HTMLFormElement)
-          );
+          const data = getFormData(e.target);
+
           const { user } = await Auth.signUp({
-            username: data.email as string,
-            password: data.password as string,
+            username: data.email,
+            password: data.password,
             attributes: {
               email: data.email,
             },
           });
+
           console.log(user);
           props.setView(View.Login); // todo: fix to Verify
         } catch (error) {

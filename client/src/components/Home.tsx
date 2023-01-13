@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Bet, User, View } from "../core";
+import { Bet, getFormData, User, View } from "../core";
 
 interface Props {
   user: User;
@@ -20,9 +20,7 @@ export function Home(props: Props) {
         style={{ marginBottom: "20px" }}
         onSubmit={(e) => {
           e.preventDefault();
-          const data = Object.fromEntries(
-            new FormData(e.target as HTMLFormElement)
-          );
+          const data = getFormData(e.target);
           console.log(data);
           setBets((bets) => [
             { amount: Number(data.amount), win: Math.random() > 0.5 },

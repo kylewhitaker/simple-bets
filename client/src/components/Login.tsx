@@ -1,4 +1,4 @@
-import { View } from "../core";
+import { getFormData, View } from "../core";
 
 interface Props {
   setView: React.Dispatch<React.SetStateAction<View>>;
@@ -7,12 +7,9 @@ interface Props {
 export function Login(props: Props) {
   return (
     <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        console.log("login form submitted");
-        const data = Object.fromEntries(
-          new FormData(event.target as HTMLFormElement)
-        );
+      onSubmit={(e) => {
+        e.preventDefault();
+        const data = getFormData(e.target);
         console.log(data);
         props.setView(View.Home);
       }}
