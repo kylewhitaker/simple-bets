@@ -39,7 +39,9 @@ function App() {
         )}
         {view === View.Verify && <Verify setView={setView} email={email} />}
         {view === View.Login && <Login setView={setView} setUser={setUser} />}
-        {view === View.Home && <Home user={user} setView={setView} />}
+        {view === View.Home && (
+          <Home setView={setView} setUser={setUser} user={user} />
+        )}
       </header>
     </div>
   );
